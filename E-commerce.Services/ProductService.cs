@@ -46,6 +46,7 @@ namespace E_commerce.Services
                     CategoryId = p.CategoryId,
                     ImageBase64 = p.Image != null ? Convert.ToBase64String(p.Image) : null,
                 })
+                .OrderByDescending(p => p.Id)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
@@ -105,7 +106,7 @@ namespace E_commerce.Services
 
         public async Task<ProductDetailDto> CreateProductAsync(CreateProductRequest request, CancellationToken cancellationToken)
         {
-            var product = new Models.Entities.Product
+            var product = new Product
             {
                 Name = request.Name,
                 Description = request.Description,
